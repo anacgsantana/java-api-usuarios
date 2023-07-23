@@ -8,6 +8,10 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,26 +24,57 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class UserController {
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
+
 	UserRepository userRepository;
 
 	@PostMapping("/users")
-	public ResponseEntity<UserModel> saveUser(@RequestBody @Valid UserRecordDto userRecordDto) {
+	public ResponseEntity<?> saveUser(@RequestBody @Valid UserRecordDto userRecordDto) {
+		if (userRepository.existsByEmail(userRecordDto.email())) {
+			String errorMessageEmail = "O e-mail informado já está em uso.";
+			logger.error(errorMessageEmail);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessageEmail);
+		}
+
+		if (userRepository.existsByCpf(userRecordDto.cpf())) {
+			String errorMessageCpf = "O CPF informado já está em uso.";
+			logger.error(errorMessageCpf);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessageCpf);
+		}
+
 		var userModel = new UserModel();
 		BeanUtils.copyProperties(userRecordDto, userModel);
 		return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(userModel));
-
 	}
 
 	@GetMapping("/users")
-	public ResponseEntity<List<UserModel>> getAllUsers() {
+	public ResponseEntity<List<UserModel>> getAllUsers(@RequestParam(required = false) String nomeFiltro) {
 		List<UserModel> usersList = userRepository.findAll();
+
+		if (nomeFiltro != null && !nomeFiltro.isEmpty()) {
+			String nomeFiltroLowerCase = nomeFiltro.toLowerCase();
+			List<UserModel> filteredUsers = usersList.stream()
+					.filter(user -> user.getNome().toLowerCase().contains(nomeFiltroLowerCase))
+					.collect(Collectors.toList());
+
+			if (!filteredUsers.isEmpty()) {
+				for (UserModel user : filteredUsers) {
+					UUID id = user.getIdUser();
+					user.add(linkTo(methodOn(UserController.class).getOneUser(id)).withSelfRel());
+				}
+			}
+
+			return ResponseEntity.status(HttpStatus.OK).body(filteredUsers);
+		}
+
 		if (!usersList.isEmpty()) {
 			for (UserModel user : usersList) {
 				UUID id = user.getIdUser();
 				user.add(linkTo(methodOn(UserController.class).getOneUser(id)).withSelfRel());
 			}
 		}
+
 		return ResponseEntity.status(HttpStatus.OK).body(usersList);
 	}
 
@@ -49,8 +84,9 @@ public class UserController {
 		if (user0.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 		}
-		user0.get().add(linkTo(methodOn(UserController.class).getAllUsers()).withRel("Users List"));
-		return ResponseEntity.status(HttpStatus.OK).body(user0.get());
+		UserModel user = user0.get();
+		user.add(linkTo(methodOn(UserController.class).getOneUser(id)).withSelfRel());
+		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
 
 	@PutMapping("/users/{id}")

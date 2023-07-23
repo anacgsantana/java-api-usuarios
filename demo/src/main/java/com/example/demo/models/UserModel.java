@@ -1,10 +1,20 @@
 package com.example.demo.models;
 
-import org.springframework.hateoas.RepresentationModel;
-import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.UUID;
+
+import org.springframework.hateoas.RepresentationModel;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "TB_USERS")
@@ -16,8 +26,18 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
 	private UUID idUser;
 
 	private String nome;
+
+	@NotBlank
+	@Email
+	@Column(unique = true)
 	private String email;
+
+	@NotBlank
+	@Column(unique = true)
 	private String cpf;
+
+	@Min(18)
+	@Max(120)
 	private int idade;
 
 	public UUID getIdUser() {
