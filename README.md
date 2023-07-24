@@ -20,9 +20,8 @@ nome;
 ## Testes
 Os testes da API podem ser executados importando a coleção do Postman. A coleção está disponível no projeto, com o nome: API Users.postman_collection
 
-## Features
+## Instalação
 
-Instalação
 Para instalar a API, siga estas etapas:
 
 - Clone o repositório do GitHub.
