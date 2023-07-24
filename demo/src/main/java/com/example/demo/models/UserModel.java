@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import org.springframework.hateoas.RepresentationModel;
-
+import org.hibernate.validator.constraints.br.CPF;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,9 +32,11 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
 	@Column(unique = true)
 	private String email;
 
-	@NotBlank
 	@Column(unique = true)
-	private String cpf;
+	@CPF(message = "CPF inválido. O CPF deve ser um número válido.")
+    @NotBlank(message = "CPF é obrigatório.")
+    private String cpf;
+
 
 	@Min(18)
 	@Max(120)

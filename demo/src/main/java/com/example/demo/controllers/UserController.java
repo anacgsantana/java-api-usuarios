@@ -6,6 +6,7 @@ import com.example.demo.repositories.UserRepository;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -101,6 +102,29 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(userModel));
 
 	}
+	@PatchMapping("/users/{id}")
+	public ResponseEntity<Object> patchUser(@PathVariable(value = "id") UUID id,
+	                                        @RequestBody Map<String, Object> camposAtualizados) {
+	    Optional<UserModel> userO = userRepository.findById(id);
+	    if (userO.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+	    }
+
+	    var userModel = userO.get();
+
+	    if (camposAtualizados.containsKey("nome")) {
+	        userModel.setNome((String) camposAtualizados.get("nome"));
+	    }
+	    if (camposAtualizados.containsKey("email")) {
+	        userModel.setEmail((String) camposAtualizados.get("email"));
+	    }
+	    if (camposAtualizados.containsKey("cpf")) {
+	        userModel.setCpf((String) camposAtualizados.get("cpf"));
+	    }    
+
+	    return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(userModel));
+	}
+
 
 	@DeleteMapping("/users/{id}")
 	public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") UUID id) {
