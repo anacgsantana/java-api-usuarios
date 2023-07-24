@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "477a8d06-be4f-476b-a80e-eeaae693c8bb",
+		"name": "API Users",
+		"description": "API Criada para o teste prático Dev Backend do Mercado Livre\n\nStartFragment\n\nEsta API RESTful fornece operações para criar, atualizar, buscar e excluir usuários. Os usuários devem ser maiores de 18 anos e não podem ter e-mail ou CPF duplicados. A busca por vários usuários pode ser filtrada pelo nome. A alteração parcial é permitida. Os CPFs são validados por seus dígitos verificadores ou quantidade de números.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17184587"
+	},
+	"item": [
+		{
+			"name": "GET ALL BY NAME",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nome",
+							"value": "Ana",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/users?nomeFiltro={nome}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "nomeFiltro",
+							"value": "{nome}"
+						}
+					]
+				},
+				"description": "**Nome:** GET ALL BY NAME\n\n**Descrição:** Esta rota recupera todos os usuários cujo nome corresponde ao parâmetro de consulta `nomeFiltro`.\n\n**Método:** GET\n\n**Rota:** `/users?nomeFiltro={nome}`\n\n**Parâmetros de consulta:**\n\n- `nomeFiltro`: O nome do usuário a ser filtrado.\n    \n\n**Corpo:** Não aplicável.\n\n**Resposta:**\n\n- `200 OK`: A solicitação foi bem-sucedida e a resposta contém uma lista de usuários cujo nome corresponde ao parâmetro de consulta `nomeFiltro`.\n- `400 Bad Request`: A solicitação não foi bem-sucedida porque o parâmetro de consulta `nomeFiltro` não está em formato válido.\n- `404 Not Found`: A solicitação não foi bem-sucedida porque nenhum usuário foi encontrado cujo nome corresponda ao parâmetro de consulta `nomeFiltro`.\n    \n\n**Exemplo:**\n\nPOSTMAN_URL: [http://localhost:8080/users?nomeFiltro=Ana]()\n\nPOSTMAN_REQUEST_BODY: Nenhum"
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				},
+				"description": "Nome: GET ALL\n\nDescrição: Esta rota recupera uma lista de todos os usuários.\n\nMétodo: GET\n\nRota: /users\n\nParâmetros: Não aplicável.\n\nCorpo: Não aplicável.\n\nResposta:\n\n200 OK: A solicitação foi bem-sucedida e a resposta contém uma lista de usuários.  \n400 Bad Request: A solicitação não foi bem-sucedida porque a solicitação não está em formato válido.  \n404 Not Found: A solicitação não foi bem-sucedida porque nenhum usuário foi encontrado.  \nExemplo:\n\nPOSTMAN_URL: [http://localhost:8080/users]()\n\nPOSTMAN_REQUEST_BODY: Nenhum"
+			},
+			"response": []
+		},
+		{
+			"name": "GET ONE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/{userId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{userId}"
+					]
+				},
+				"description": "Nome: GET ONE\n\nDescrição: Esta rota recupera um usuário pelo ID.\n\nMétodo: GET\n\nRota: /users/{userId}\n\nParâmetros:\n\nuserId: O ID do usuário a ser recuperado.  \nCorpo: Não aplicável.\n\nResposta:\n\n200 OK: A solicitação foi bem-sucedida e a resposta contém um usuário.  \n400 Bad Request: A solicitação não foi bem-sucedida porque a solicitação não está em formato válido.  \n404 Not Found: A solicitação não foi bem-sucedida porque nenhum usuário foi encontrado com o ID especificado."
+			},
+			"response": []
+		},
+		{
+			"name": "POST",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				},
+				"description": "Nome: POST\n\nDescrição: Esta rota cria um novo usuário.\n\nMétodo: POST\n\nRota: /users\n\nCorpo:\n\n{  \n\"nome\": \"Bianca\",  \n\"email\": \"[bianca@teste.com](),  \n\"cpf\":\"325.141.070-910\",  \n\"idade\":36  \n}  \nResposta:\n\n201 Created: A solicitação foi bem-sucedida e a resposta contém o ID do usuário criado.  \n400 Bad Request: A solicitação não foi bem-sucedida porque a solicitação não está em formato válido.  \n409 Conflict: A solicitação não foi bem-sucedida porque o usuário já existe.  \nExemplo:\n\nPOSTMAN_URL: [http://localhost:8080/users]()\n\nPOSTMAN_REQUEST_BODY:"
+			},
+			"response": []
+		},
+		{
+			"name": "PARTIAL UPDATE",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Novo Nome\",\r\n    \"email\": \"novoemail@example.com\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "ttp://localhost:8080/users/{userId}",
+					"protocol": "ttp",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{userId}"
+					]
+				},
+				"description": "Nome: PARTIAL UPDATE\n\nDescrição: Esta rota atualiza parcialmente um usuário.\n\nMétodo: PATCH\n\nRota: /users/{userId}\n\nCorpo:\n\n{  \n\"nome\": \"Novo Nome\",  \n\"email\": \"[novoemail@example.com]()\"  \n}  \nResposta:\n\n200 OK: A solicitação foi bem-sucedida e a resposta contém o usuário atualizado.  \n400 Bad Request: A solicitação não foi bem-sucedida porque a solicitação não está em formato válido.  \n404 Not Found: A solicitação não foi bem-sucedida porque nenhum usuário foi encontrado com o ID especificado.  \nExemplo:\n\nPOSTMAN_URL: [http://localhost:8080/users/42ff574b-cc2c-4546-b9a9-9aec8e930795]()\n\nPOSTMAN_REQUEST_BODY:  \n{  \n\"idUser\": \"42ff574b-cc2c-4546-b9a9-9aec8e930795\",  \n\"nome\": \"Novo Nome\",  \n\"email\": \"[novoemail@example.com]()\",  \n\"cpf\": \"12345678\",  \n\"idade\": 36  \n}"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/{userId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{userId}"
+					]
+				},
+				"description": "Nome: UPDATE\n\nDescrição: Esta rota atualiza um usuário.\n\nMétodo: PUT\n\nRota: /users/{userId}\n\nParâmetros:\n\nuserId: O ID do usuário a ser atualizado.  \nCorpo:\n\n{  \n\"nome\": \"John Doe ATUALIZADO\",  \n\"email\": \"[johndoe@gmail.com]()\",  \n\"cpf\": \"12345678\",  \n\"idade\": 46  \n}  \nResposta:\n\n200 OK: A solicitação foi bem-sucedida e a resposta contém o usuário atualizado.  \n400 Bad Request: A solicitação não foi bem-sucedida porque a solicitação não está em formato válido.  \n404 Not Found: A solicitação não foi bem-sucedida porque nenhum usuário foi encontrado com o ID especificado.  \nExemplo:\n\nPOSTMAN_URL: [http://localhost:8080/users/42ff574b-cc2c-4546-b9a9-9aec8e930795]()\n\nPOSTMAN_REQUEST_BODY:  \n{  \n\"nome\": \"John Doe ATUALIZADO\",  \n\"email\": \"[johndoe@gmail.com]()\",  \n\"cpf\": \"12345678\",  \n\"idade\": 46  \n}"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/{userId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{userId}"
+					]
+				},
+				"description": "Nome: DELETE\n\nDescrição: Esta rota deleta um usuário pelo ID.\n\nMétodo: DELETE\n\nRota: /users/{userId}\n\nParâmetros:\n\nuserId: O ID do usuário a ser deletado.  \nCorpo: Não aplicável.\n\nResposta:\n\n204 No Content: A solicitação foi bem-sucedida e o usuário foi deletado.  \n400 Bad Request: A solicitação não foi bem-sucedida porque a solicitação não está em formato válido.  \n404 Not Found: A solicitação não foi bem-sucedida porque nenhum usuário foi encontrado com o ID especificado.  \nExemplo:\n\nPOSTMAN_URL: [http://localhost:8080/users/ba6855e9-633e-4260-bb88-b84cc93cd171]()\n\nPOSTMAN_REQUEST_BODY: Nenhum"
+			},
+			"response": []
+		}
+	]
+}
