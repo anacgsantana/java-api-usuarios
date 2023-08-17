@@ -1,7 +1,4 @@
-# Teste Prático: Dev Backend 
-
-
-O desafio consiste na criação de uma API RESTful com as operações de cadastro, atualização, busca de um único recurso e busca de vários recursos. 
+API RESTful em java com as operações de cadastro, atualização, busca de um único recurso e busca de vários recursos. 
 Também foram implementadas algumas regras de negócio.
 
 Regras de negócio implementadas:
