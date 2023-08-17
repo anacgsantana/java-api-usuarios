@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "477a8d06-be4f-476b-a80e-eeaae693c8bb",
 		"name": "API Users",
-		"description": "API Criada para o teste prático Dev Backend do Mercado Livre\n\nStartFragment\n\nEsta API RESTful fornece operações para criar, atualizar, buscar e excluir usuários. Os usuários devem ser maiores de 18 anos e não podem ter e-mail ou CPF duplicados. A busca por vários usuários pode ser filtrada pelo nome. A alteração parcial é permitida. Os CPFs são validados por seus dígitos verificadores ou quantidade de números.",
+		"description": "\n\nStartFragment\n\nEsta API RESTful fornece operações para criar, atualizar, buscar e excluir usuários. Os usuários devem ser maiores de 18 anos e não podem ter e-mail ou CPF duplicados. A busca por vários usuários pode ser filtrada pelo nome. A alteração parcial é permitida. Os CPFs são validados por seus dígitos verificadores ou quantidade de números.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17184587"
 	},
